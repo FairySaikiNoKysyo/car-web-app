@@ -1,5 +1,17 @@
-export const CatalogCard = ({
-  car: {
+import { setFavorites } from '../../Redux/Favorite/favoriteSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  ButtonHeart,
+  ImgWrapper,
+  ItemWrapper,
+  StyledImg,
+} from './CatalogCard.styled';
+import { useState } from 'react';
+import { selectFavoriteCards } from '../../Redux/selectors';
+import sprite from '../../images/icons.svg';
+
+export const CatalogCard = ({ car }) => {
+  const {
     make,
     model,
     type,
@@ -10,15 +22,37 @@ export const CatalogCard = ({
     rentalCompany,
     address,
     mileage,
-  },
-}) => {
+    id,
+  } = car;
+  const dispatch = useDispatch();
+  const favorites = useSelector(selectFavoriteCards);
+  const [isFavorite, setIsFavorite] = useState(
+    favorites.some(favorite => favorite.id === id)
+  );
+
   const city = address ? address.split(',')[1].trim() : '';
   const country = address ? address.split(',')[2].trim() : '';
+
+  const handleToggle = () => {
+    dispatch(setFavorites(car));
+    setIsFavorite(prevIsFavorite => !prevIsFavorite);
+  };
   return (
-    <div>
-      <div>
+    <ItemWrapper>
+      <StyledImg src={img} alt={make} />
+      <ButtonHeart
+        type="button"
+        onClick={handleToggle}
+        data-favorite={isFavorite}
+      >
+        <svg>
+          <use xlinkHref={`${sprite}#icon-heart`} />
+        </svg>
+      </ButtonHeart>
+
+      <ImgWrapper>
         <img src={img} alt={make} />
-      </div>
+      </ImgWrapper>
       <div>
         <h3>
           {make} <span>{model}</span>,{year}
@@ -36,6 +70,6 @@ export const CatalogCard = ({
           <li>{accessories[0]}</li>
         </ul>
       </div>
-    </div>
+    </ItemWrapper>
   );
 };

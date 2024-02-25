@@ -1,37 +1,30 @@
+import { fetchAllCars } from '../../Redux/operations';
+import {
+  
+ 
+  selectFilteredCars,
+} from '../../Redux/selectors';
+import { Catalog } from 'components/Catalog/Catalog';
+import { FiltersBar } from 'components/FiltersBar/FiltersBar';
+import { LoadMoreBtn } from 'components/LoadMoreBtn/LoadMoreBtn';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchAllCars } from "../../Redux/operations";
-import { selectCars, selectFilter, selectFilteredCars } from "../../Redux/selectors";
-import { Catalog } from "components/Catalog/Catalog"
-import { FiltersBar } from "components/FiltersBar/FiltersBar";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
+export const CatalogPage = () => {
+  const dispatch = useDispatch();
+  const cars = useSelector(selectFilteredCars);
 
-export const CatalogPage = () =>{
-    const dispatch = useDispatch(selectCars);
-    const cars = useSelector(selectFilteredCars);
-    const filters =useSelector(selectFilter)
-    const allCars = useSelector(selectCars)
-    console.log(cars);
-    console.log(filters)
-    console.log(allCars)
-    
+  const shouldRenderLoadMoreBtn = cars.length % 12 === 0;
+
   useEffect(() => {
     dispatch(fetchAllCars());
   }, [dispatch]);
 
-return(
-    
+  return (
     <div>
-        <FiltersBar/>
-        <Catalog cars = {cars}/>
-    
+      <FiltersBar />
+      <Catalog cars={cars} />
+      {shouldRenderLoadMoreBtn && <LoadMoreBtn />}
     </div>
-
-
-
-
-)
-
-
-
-}
+  );
+};

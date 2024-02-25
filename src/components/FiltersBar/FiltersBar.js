@@ -1,41 +1,17 @@
 import { Field, Form, Formik } from 'formik';
 import Select from 'react-select';
 import { options, priceOptions } from './options';
-import { useState } from 'react';
+
 import { setFilter } from '../../Redux/filterSlice';
 import { useDispatch } from 'react-redux';
+import { NumericFormat } from 'react-number-format';
 
 export const FiltersBar = () => {
   const dispatch = useDispatch();
-  const [carBrand, setCarBrand] = useState(null);
-  const [price, setPrice] = useState(null);
 
-  const formatNumber = (value) => {
-    if (!value) {
-      return ''; // Повертаємо порожній рядок для порожнього вводу
-    }
-  
-    const number = parseFloat(value.replace(/,/g, ''));
-    return isNaN(number) ? '' : number.toLocaleString();
+  const parseNumber = value => {
+    return value === '' ? null : parseFloat(value.replace(/,/g, ''));
   };
-  
-  // Функція для розкодування числа при відправці форми
-  const parseNumber = (value) => {
-    return value === '' ? '' : parseFloat(value.replace(/,/g, ''));
-  };
-
-
-  // const validateNumber = value => {
-  //   const isNumber = /^\d+$/.test(value);
-  //   return isNumber ? undefined : 'Enter a valid number';
-  // };
-
-  // const validatePositiveNumber = value => {
-  //   const isNumber = /^\d+$/.test(value);
-  //   return isNumber && parseInt(value, 10) >= 0
-  //     ? undefined
-  //     : 'Enter a positive number';
-  // };
 
   return (
     <Formik
@@ -45,59 +21,93 @@ export const FiltersBar = () => {
         mileageFrom: '',
         mileageTo: '',
       }}
-      onSubmit={(values, ) => {
-        console.log(values);
+      onSubmit={(values, { setFieldError }) => {
+        const mileageFrom = parseNumber(values.mileageFrom);
+        const mileageTo = parseNumber(values.mileageTo);
+        console.log(mileageFrom);
+        console.log(mileageTo);
+
+        if (mileageFrom < 0 || mileageTo < 0) {
+          setFieldError('mileageFrom', 'We used minus');
+          setFieldError('mileageTo', 'We used minus');
+          return;
+        }
+
         const filters = {
           brand: values.carBrand,
           price: values.price,
-          mileageFrom: values.mileageFrom,
-          mileageTo: values.mileageTo,
-          
+          mileageFrom,
+          mileageTo,
         };
 
         console.log(filters);
         dispatch(setFilter(filters));
-
-        // resetForm();
-        // onCloseModal();
-        // successToaster();
       }}
     >
-  {({ setFieldValue }) => (
-<Form>
-        <Select
-          name="carBrand"
-          // value={carBrand}
-          onChange={(selectedOption) => setFieldValue("carBrand", selectedOption.value)}
-          options={options}
-          placeholder="Choose your car"
-        />
+      {({ setFieldValue, submitForm, resetForm }) => (
+        <Form>
+          <Select
+            name="carBrand"
+            // value={resetState ? null : options.find(option => option.value === values.carBrand)}
+            onChange={selectedOption =>
+              setFieldValue('carBrand', selectedOption.value)
+            }
+            options={options}
+            placeholder="Choose your car"
+          />
 
-        <Select
-          name="price"
-          // value={price}
-          onChange={(selectedOption) => setFieldValue("price", selectedOption.value)}
-          options={priceOptions}
-          placeholder="To $"
-        />
+          <Select
+            name="price"
+            // value={price}
+            onChange={selectedOption =>
+              setFieldValue('price', selectedOption.value)
+            }
+            options={priceOptions}
+            placeholder="To $"
+          />
 
-        <Field
-          name="mileageFrom"
-          placeholder="From"
-          // validate={value => {
-          //   return validateNumber(value) || validatePositiveNumber(value);
-          // }}
-        />
-        <Field
-          name="mileageTo"
-          placeholder="To"
-          // validate={value => {
-          //   return validateNumber(value) || validatePositiveNumber(value);
-          // }}
-        />
-       <button type='submit'>Search</button>
-      </Form>
-  )}
+          <Field name="mileageFrom">
+            {({ field }) => (
+              <NumericFormat
+                {...field}
+                placeholder="From"
+                displayType={'input'}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  setFieldValue('mileageFrom', values.value);
+                }}
+              />
+            )}
+          </Field>
+          <Field name="mileageTo">
+            {({ field }) => (
+              <NumericFormat
+                {...field}
+                placeholder="To"
+                displayType={'input'}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  setFieldValue('mileageTo', values.value);
+                }}
+              />
+            )}
+          </Field>
+          <button type="submit">Search</button>
+          <button
+            type="button"
+            onClick={() => {
+              submitForm();
+              setFieldValue('carBrand', '');
+              setFieldValue('price', 0);
+              setFieldValue('mileageFrom', '');
+              setFieldValue('mileageTo', '');
+              resetForm();
+            }}
+          >
+            Reset Filters
+          </button>
+        </Form>
+      )}
     </Formik>
   );
 };

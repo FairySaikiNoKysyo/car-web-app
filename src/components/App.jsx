@@ -1,8 +1,9 @@
-import { Favorites } from "Pages/Favorites/Favorites";
+
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./Layout/Layout";
 import { WelcomePage } from "Pages/WelcomePage/WelcomePage";
 import { CatalogPage } from "Pages/CatalogPage/CatalogPage";
+import { FavoritePage } from "Pages/Favorites/FavoritesPage";
 
 export const App = () => {
   return (
@@ -11,7 +12,7 @@ export const App = () => {
 <Route path='/' element={<Layout/>}/>
 <Route index element={<WelcomePage />} />
 <Route path='/catalog' element={<CatalogPage/>}/>
-{/* <Route path='/favorites' element={<Favorites/>}/> */}
+<Route path='/favorites' element={<FavoritePage/>}/>
 
 
 </Routes>

@@ -5,6 +5,7 @@ export const selectIsLoading = (state) => state.cars.isLoading;
 export const selectError = (state) => state.cars.isError;
 export const selectCarDetails = (state) => state.cars.carDetails;
 export const selectFilter = state => state.filter;
+export const selectFavoriteCards = state => state.favorites.favorites;
 
 
 export const selectFilteredCars = createSelector(
@@ -16,8 +17,8 @@ export const selectFilteredCars = createSelector(
         return (
           (!filter.brand || car.make === filter.brand) &&
           (!filter.price || rentalPriceNumeric  <= filter.price) && 
-          (!filter.mileageTo || car.mileage >= filter.mileageTo) &&
-          (!filter.mileageFrom || car.mileage <= filter.mileageFrom)
+          (!filter.mileageFrom || car.mileage >= filter.mileageFrom) &&
+          (!filter.mileageTo || car.mileage <= filter.mileageTo)
         );
       });
     }
