@@ -1,9 +1,5 @@
 import { fetchAllCars } from '../../Redux/operations';
-import {
-  
- 
-  selectFilteredCars,
-} from '../../Redux/selectors';
+import { selectFilteredCars } from '../../Redux/selectors';
 import { Catalog } from 'components/Catalog/Catalog';
 import { FiltersBar } from 'components/FiltersBar/FiltersBar';
 import { LoadMoreBtn } from 'components/LoadMoreBtn/LoadMoreBtn';
