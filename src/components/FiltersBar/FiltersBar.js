@@ -5,7 +5,7 @@ import { options, priceOptions } from './options';
 import { setFilter } from '../../Redux/filterSlice';
 import { useDispatch } from 'react-redux';
 import { NumericFormat } from 'react-number-format';
-import {  FilterWrapper } from './FiltersBar.styled';
+import { FilterWrapper } from './FiltersBar.styled';
 import { NavigationLink } from 'components/NavBar/NavBar.styled';
 
 export const FiltersBar = () => {
@@ -26,8 +26,6 @@ export const FiltersBar = () => {
       onSubmit={(values, { setFieldError }) => {
         const mileageFrom = parseNumber(values.mileageFrom);
         const mileageTo = parseNumber(values.mileageTo);
-        console.log(mileageFrom);
-        console.log(mileageTo);
 
         if (mileageFrom < 0 || mileageTo < 0) {
           setFieldError('mileageFrom', 'We used minus');
@@ -42,7 +40,6 @@ export const FiltersBar = () => {
           mileageTo,
         };
 
-        console.log(filters);
         dispatch(setFilter(filters));
       }}
     >
@@ -84,7 +81,7 @@ export const FiltersBar = () => {
               />
             )}
           </Field>
-          <Field  name="mileageTo" >
+          <Field name="mileageTo">
             {({ field }) => (
               <NumericFormat
                 {...field}

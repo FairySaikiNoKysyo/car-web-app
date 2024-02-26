@@ -42,7 +42,6 @@ export const CatalogCard = ({ car }) => {
 
   const handleToggle = () => {
     dispatch(setFavorites(car));
-    console.log(car);
     setIsFavorite(prevIsFavorite => !prevIsFavorite);
   };
 

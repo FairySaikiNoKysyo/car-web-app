@@ -5,8 +5,6 @@ export const filterSlice = createSlice({
   initialState: { brand: '', price: 0, mileageFrom: 0, mileageTo: 1000000 },
   reducers: {
     setFilter(state, action) {
-        console.log(action)
-        // console.log(state)
       return action.payload;
     },
   },

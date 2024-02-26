@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout/Layout';
-// import { lazy } from 'react';
+
 import { WelcomePage } from 'Pages/WelcomePage/WelcomePage';
 import { CatalogPage } from 'Pages/CatalogPage/CatalogPage';
 import { FavoritePage } from 'Pages/Favorites/FavoritesPage';

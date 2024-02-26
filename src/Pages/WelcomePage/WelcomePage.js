@@ -4,7 +4,13 @@ export const WelcomePage =()=>{
 
 return(
 
-<div>
+<div  style={{
+    display:'inline-block',
+        width: '100%',
+        minHeight: '100vh',
+     
+        left: '50%'
+      }}>
     <NavLink to='/catalog'>Get your car</NavLink>   
 </div>
 
