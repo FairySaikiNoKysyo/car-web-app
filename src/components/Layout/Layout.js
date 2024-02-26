@@ -1,19 +1,26 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
-import { Toaster } from 'react-hot-toast';
-import { StyledLayout } from "./Layout.styled";
-import { Loader } from "components/Loader/Loader";
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Header } from 'components/Header/Header';
 
-
-
+import { Loader } from 'components/Loader/Loader';
 
 export const Layout = () => {
-    return (
-      <StyledLayout>
-        <Suspense fallback={<Loader/>}>
+  return (
+    <div
+      style={{
+        width: '100%',
+        minHeight: '100vh',
+        margin: '0 auto',
+        padding: '0 128px 150px',
+      }}
+    >
+      <Header />
+
+      <main>
+        <Suspense fallback={<Loader />}>
           <Outlet />
-          <Toaster />
         </Suspense>
-      </StyledLayout>
-    );
-  };
+      </main>
+    </div>
+  );
+};

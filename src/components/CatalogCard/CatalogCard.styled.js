@@ -58,31 +58,14 @@ export const AccentText = styled.span`
   color: ${p => p.theme.colors.lightBlue};
 `;
 
-export const DescriptionInfo = styled.ul`
-  margin-bottom: ${p => p.theme.spacing(7)};
-
-  li {
-    margin-bottom: ${p => p.theme.spacing(1)};
-    padding: 0;
-    white-space: nowrap;
-  }
-  p {
-    display: inline-block;
-    font-size: 12px;
-    opacity: 0.5;
-    margin: 0;
-  }
-  p:not(:last-child)::after {
-    content: '';
-    display: inline-block;
-    width: 1px;
-    height: 16px;
-    background-color: ${p => p.theme.colors.dark};
-    opacity: 0.1;
-    margin: 0 ${p => p.theme.spacing(1.5)};
-    vertical-align: middle;
-  }
+export const DescriptionList = styled.ul`
+   display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  align-items: start;
+  margin-bottom: auto;
 `;
+
 
 export const CardButton = styled.button`
   font-weight: 600;
@@ -98,5 +81,29 @@ export const CardButton = styled.button`
   &:hover,
   &:focus {
     background-color: ${p => p.theme.colors.blue};
+  }
+`;
+export const DescriptionInfo = styled.li`
+  font-weight: 400;
+  font-size: 12px;
+  color: #12141780;
+
+  position: relative;
+
+  &::after {
+    content: ' ';
+    position: static;
+    width: 16px;
+    height: 0;
+    flex: none;
+    order: 3;
+    flex-grow: 0;
+    margin: 0px 6px;
+    transform: rotate(90deg);
+    border: 1px solid rgba(18, 20, 23, 0.1);
+  }
+
+  &:last-child::after {
+    display: none;
   }
 `;

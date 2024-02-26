@@ -1,9 +1,15 @@
 import { setFavorites } from '../../Redux/Favorite/favoriteSlice';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
+  AccentText,
   ButtonHeart,
+  DescriptionInfo,
+  DescriptionList,
   ImgWrapper,
+  InfoText,
   ItemWrapper,
+  MainInfo,
   StyledImg,
 } from './CatalogCard.styled';
 import { useState } from 'react';
@@ -23,6 +29,7 @@ export const CatalogCard = ({ car }) => {
     address,
     mileage,
     id,
+    functionalities,
   } = car;
   const dispatch = useDispatch();
   const favorites = useSelector(selectFavorite);
@@ -38,6 +45,7 @@ export const CatalogCard = ({ car }) => {
     console.log(car);
     setIsFavorite(prevIsFavorite => !prevIsFavorite);
   };
+
   return (
     <ItemWrapper>
       <ImgWrapper>
@@ -52,23 +60,25 @@ export const CatalogCard = ({ car }) => {
           </svg>
         </ButtonHeart>
       </ImgWrapper>
-      <div>
-        <h3>
-          {make} <span>{model}</span>,{year}
-        </h3>
-        <p>{rentalPrice}</p>
-      </div>
-      <div>
-        <ul>
-          <li>{city}</li>
-          <li>{country}</li>
-          <li>{rentalCompany}</li>
-          <li>{type}</li>
-          <li>{model}</li>
-          <li>{mileage}</li>
-          <li>{accessories[0]}</li>
-        </ul>
-      </div>
+      <MainInfo>
+        <InfoText>
+          {make} <AccentText>{model}</AccentText>,{year}
+        </InfoText>
+        <InfoText>{rentalPrice}</InfoText>
+      </MainInfo>
+
+      <DescriptionList>
+        <DescriptionInfo>{city}</DescriptionInfo>
+        <DescriptionInfo>{country}</DescriptionInfo>
+        <DescriptionInfo>{rentalCompany}</DescriptionInfo>
+        {accessories.includes('Premium') && (
+          <DescriptionInfo>Premium</DescriptionInfo>
+        )}
+        <DescriptionInfo>{type}</DescriptionInfo>
+        <DescriptionInfo>{mileage}</DescriptionInfo>
+        <DescriptionInfo>{id}</DescriptionInfo>
+        <DescriptionInfo>{functionalities[0]}</DescriptionInfo>
+      </DescriptionList>
     </ItemWrapper>
   );
 };

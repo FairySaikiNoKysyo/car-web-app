@@ -5,7 +5,7 @@ export const selectIsLoading = (state) => state.cars.isLoading;
 export const selectError = (state) => state.cars.isError;
 export const selectCarDetails = (state) => state.cars.carDetails;
 export const selectFilter = state => state.filter;
-export const selectFavoriteCards = state => state.favorites.favorites;
+export const selectFavoriteCards = state => state.favorite.favorites;
 
 
 export const selectFilteredCars = createSelector(

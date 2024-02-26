@@ -1,10 +1,12 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import Select from 'react-select';
 import { options, priceOptions } from './options';
 
 import { setFilter } from '../../Redux/filterSlice';
 import { useDispatch } from 'react-redux';
 import { NumericFormat } from 'react-number-format';
+import {  FilterWrapper } from './FiltersBar.styled';
+import { NavigationLink } from 'components/NavBar/NavBar.styled';
 
 export const FiltersBar = () => {
   const dispatch = useDispatch();
@@ -45,26 +47,29 @@ export const FiltersBar = () => {
       }}
     >
       {({ setFieldValue, submitForm, resetForm }) => (
-        <Form>
-          <Select
-            name="carBrand"
-            // value={resetState ? null : options.find(option => option.value === values.carBrand)}
-            onChange={selectedOption =>
-              setFieldValue('carBrand', selectedOption.value)
-            }
-            options={options}
-            placeholder="Choose your car"
-          />
-
-          <Select
-            name="price"
-            // value={price}
-            onChange={selectedOption =>
-              setFieldValue('price', selectedOption.value)
-            }
-            options={priceOptions}
-            placeholder="To $"
-          />
+        <FilterWrapper>
+          <div>
+            <Select
+              name="carBrand"
+              // value={resetState ? null : options.find(option => option.value === values.carBrand)}
+              onChange={selectedOption =>
+                setFieldValue('carBrand', selectedOption.value)
+              }
+              options={options}
+              placeholder="Choose your car"
+            />
+          </div>
+          <div>
+            <Select
+              name="price"
+              // value={price}
+              onChange={selectedOption =>
+                setFieldValue('price', selectedOption.value)
+              }
+              options={priceOptions}
+              placeholder="To $"
+            />
+          </div>
 
           <Field name="mileageFrom">
             {({ field }) => (
@@ -79,7 +84,7 @@ export const FiltersBar = () => {
               />
             )}
           </Field>
-          <Field name="mileageTo">
+          <Field  name="mileageTo" >
             {({ field }) => (
               <NumericFormat
                 {...field}
@@ -106,7 +111,8 @@ export const FiltersBar = () => {
           >
             Reset Filters
           </button>
-        </Form>
+          <NavigationLink to="/favorites">Favorites</NavigationLink>
+        </FilterWrapper>
       )}
     </Formik>
   );
